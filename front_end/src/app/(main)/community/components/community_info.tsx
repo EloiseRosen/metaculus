@@ -2,6 +2,7 @@
 
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,7 +11,9 @@ import React, { FC, useEffect, useRef, useState } from "react";
 
 import communityPlaceholder from "@/app/assets/images/tournament.webp";
 import Button from "@/components/ui/button";
+import { useAuth } from "@/contexts/auth_context";
 import { useNavigation } from "@/contexts/navigation_context";
+import { ProjectPermissions } from "@/types/post";
 import { Community } from "@/types/projects";
 
 import { useShowActiveCommunityContext } from "./community_context";
@@ -19,9 +22,11 @@ import CommunityFollow from "./community_follow";
 type Props = {
   community: Community;
 };
+
 const CommunityInfo: FC<Props> = ({ community }) => {
   const t = useTranslations();
   const router = useRouter();
+  const { user } = useAuth();
   const [followersCount, setFollowersCount] = useState(
     community.followers_count
   );
@@ -73,15 +78,33 @@ const CommunityInfo: FC<Props> = ({ community }) => {
           {community.name}
         </h1>
       </div>
-      <p className="my-5 line-clamp-3 h-[60px] text-sm text-blue-900/60 dark:text-blue-900-dark/60 xs:line-clamp-2 xs:h-10">
-        {community.description}
-      </p>
-      <div className="flex items-center">
-        <CommunityFollow
-          community={community}
-          setFollowersCount={setFollowersCount}
-          className="absolute right-0 top-0 xs:static"
-        />
+
+      {community.description && (
+        <p className="my-5 line-clamp-3 max-h-[60px] text-sm text-blue-900/60 dark:text-blue-900-dark/60 xs:line-clamp-2 xs:max-h-10">
+          {community.description}
+        </p>
+      )}
+
+      <div
+        className={classNames("flex items-center", {
+          "mt-4": !community.description,
+        })}
+      >
+        {community.user_permission === ProjectPermissions.ADMIN ? (
+          <Button
+            variant="secondary"
+            href={`/community/${community.slug}/settings`}
+            className="!border-blue-500 !text-blue-700 dark:!border-blue-500-dark dark:!text-blue-700-dark"
+          >
+            Manage Community
+          </Button>
+        ) : (
+          <CommunityFollow
+            community={community}
+            setFollowersCount={setFollowersCount}
+            className="absolute right-0 top-0 xs:static"
+          />
+        )}
         <p className="my-0 flex flex-col gap-1 text-xs text-blue-900/60 dark:text-blue-900-dark/60 xs:ml-5 xs:flex-row">
           <span className="order-2 font-bold text-gray-700 dark:text-gray-700-dark xs:-order-1">
             {followersCount}
