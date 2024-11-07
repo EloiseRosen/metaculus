@@ -74,6 +74,7 @@
   "predictionLabel": "Prediction",
   "pdfLabel": "Probability Density",
   "cdfLabel": "Cumulative Probability",
+  "cumulativeDistributionFunction": "Cumulative Distribution Function",
   "recencyWeighted": "Recency weighted",
   "unweighted": "Unweighted",
   "metaculus": "Metaculus",
