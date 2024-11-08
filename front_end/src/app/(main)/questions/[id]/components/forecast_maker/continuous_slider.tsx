@@ -45,15 +45,15 @@ const ContinuousSlider: FC<Props> = ({
   return (
     <div>
       <div className="flex items-center gap-2">
-        <p className={classNames("m-0", graphType === "cdf" ? "opacity-30" : "opacity-60")}>
-          {t("pdfLabel")}
+        <p className={classNames("m-0", graphType === "cdf" ? "opacity-30" : "opacity-60")} title="probability density function">
+          {t("pdf")}
         </p>
         <Switch
           checked={graphType === "cdf"}
           onChange={(checked) => setGraphType(checked ? "cdf" : "pmf")}
         />
-        <p className={classNames("m-0", graphType === "cdf" ? "opacity-60" : "opacity-30")}>
-          {t("cumulativeDistributionFunction")}
+        <p className={classNames("m-0", graphType === "cdf" ? "opacity-60" : "opacity-30")} title="cumulative density function">
+          {t("cdf")}
         </p>
       </div>
       <ContinuousPredictionChart
