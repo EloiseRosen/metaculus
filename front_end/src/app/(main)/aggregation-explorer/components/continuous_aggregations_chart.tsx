@@ -81,14 +81,14 @@ const ContinuousAggregationChart: FC<Props> = ({
   return (
     <div className="my-5">
       <div className="flex items-center gap-2">
-        <p className={classNames("m-0", graphType === "cdf" ? "opacity-30" : "opacity-60")}>
+        <p className={classNames("m-0", graphType === "cdf" ? "opacity-50" : "opacity-80")}>
           {t("pdfLabel")}
         </p>
         <Switch
           checked={graphType === "cdf"}
           onChange={(checked) => setGraphType(checked ? "cdf" : "pmf")}
         />
-        <p className={classNames("m-0", graphType === "cdf" ? "opacity-60" : "opacity-30")}>
+        <p className={classNames("m-0", graphType === "cdf" ? "opacity-80" : "opacity-50")}>
           {t("cumulativeDistributionFunction")}
         </p>
       </div>
